@@ -21,7 +21,7 @@ function useLocalStorageState<T>(key: string, initialValue: T) {
   return [state, setState] as const;
 }
 
-function EditableField({
+function EditableText({
   storageKey,
   initialValue,
 }: {
@@ -58,16 +58,59 @@ function Heading() {
   return (
     <section id="title">
       <h1 style={{ display: "flex", alignItems: "center" }}>
-        <EditableField storageKey="first" initialValue="Ulf" />
+        <EditableText storageKey="first" initialValue="Ulf" />
         <span className="dash"></span>
-        <EditableField storageKey="last" initialValue="Dellbrügge" />
+        <EditableText storageKey="last" initialValue="Dellbrügge" />
         <span className="dash"></span>
-        <EditableField storageKey="title" initialValue="Medior Web Developer" />
+        <EditableText storageKey="title" initialValue="Medior Web Developer" />
       </h1>
     </section>
   );
 }
 
+function ToggleUrlEdit({ key }: { key: string }) {
+  const [active, setActive] = useLocalStorageState(key + "-active", false);
+  const handleCheckboxChange = () => {
+    setActive((prev) => !prev);
+  };
+
+  return (
+    <div style={{ display: "flex", gridTemplateColumns: "1fr 1fr 1fr" }}>
+      <input
+        type="checkbox"
+        name={key + "-active"}
+        id="linkedin-active"
+        checked={active}
+        onChange={handleCheckboxChange}
+        style={{ marginRight: "10px" }}
+      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <EditableText
+          storageKey={key + "-label"}
+          initialValue="LinkedIn"
+        ></EditableText>
+        <EditableText
+          storageKey={key + "-url"}
+          initialValue="https://www.linkedin.com/in/ulfdellbruegge/"
+        ></EditableText>
+      </div>
+    </div>
+  );
+}
+function ContactEdit() {
+  return (
+    <div>
+      <h2>Contact</h2>
+      <ToggleUrlEdit key="linkedin" />
+    </div>
+  );
+}
 function Contact() {
   return (
     <section id="contact">
@@ -235,6 +278,7 @@ function App() {
   return (
     <main>
       <Heading />
+      <ContactEdit />
       <Contact />
       <Summary />
       <Jobs />
