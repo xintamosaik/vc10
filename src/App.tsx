@@ -54,27 +54,15 @@ function EditableField({
   );
 }
 
-function FirstName() {
-  return <EditableField storageKey="first" initialValue="Ulf" />;
-}
-
-function LastName() {
-  return <EditableField storageKey="last" initialValue="Dellbrügge" />;
-}
-
-function Title() {
-  return <EditableField storageKey="title" initialValue="Medior Web Developer" />;
-}
-
 function Heading() {
   return (
     <section id="title">
       <h1 style={{ display: "flex", alignItems: "center" }}>
-        <FirstName />
+        <EditableField storageKey="first" initialValue="Ulf" />
         <span className="dash"></span>
-        <LastName />
+        <EditableField storageKey="last" initialValue="Dellbrügge" />
         <span className="dash"></span>
-        <Title />
+        <EditableField storageKey="title" initialValue="Medior Web Developer" />
       </h1>
     </section>
   );
