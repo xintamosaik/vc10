@@ -21,99 +21,52 @@ function useLocalStorageState<T>(key: string, initialValue: T) {
   return [state, setState] as const;
 }
 
-function FlyingInput({
-  setCallback,
+function EditableField({
+  storageKey,
   initialValue,
-  stateCallback,
 }: {
-  setCallback: (value: string) => void;
+  storageKey: string;
   initialValue: string;
-  stateCallback: (state: boolean) => void;
 }) {
+  const [edit, setEdit] = useState(false);
+  const [value, setValue] = useLocalStorageState(storageKey, initialValue);
+
   return (
-    <input
-      type="text"
-      className="fly"
-      value={initialValue}
-      onChange={(e) => setCallback(e.target.value)}
-      onBlur={() => stateCallback(false)}
-      onAbort={() => {
-        stateCallback(false);
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          stateCallback(false);
-        } else if (e.key === "Escape") {
-          stateCallback(false);
-        }
-      }}
-      autoFocus
-    />
+    <span style={{ cursor: edit ? "text" : "pointer" }}>
+      {edit && (
+        <input
+          type="text"
+          className="fly"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onBlur={() => setEdit(false)}
+          onAbort={() => setEdit(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === "Escape") {
+              setEdit(false);
+            }
+          }}
+          autoFocus
+        />
+      )}
+      <span onClick={() => setEdit(true)}>{value}</span>
+    </span>
   );
 }
 
 function FirstName() {
-  const [edit, setEdit] = useState(false);
-  const [first, setFirst] = useLocalStorageState("first", "Ulf");
-
-  return (
-    <>
-      <span style={{ cursor: edit ? "text" : "pointer" }}>
-        {edit && (
-          <FlyingInput
-            setCallback={setFirst}
-            initialValue={first}
-            stateCallback={setEdit}
-          />
-        )}
-        <span onClick={() => setEdit(true)}>{first}</span>
-      </span>
-    </>
-  );
+  return <EditableField storageKey="first" initialValue="Ulf" />;
 }
 
 function LastName() {
-  const [edit, setEdit] = useState(false);
-  const [last, setLast] = useLocalStorageState("last", "Dellbrügge");
-  return (
-    <>
-      <span style={{ cursor: edit ? "text" : "pointer" }}>
-        {edit && (
-          <FlyingInput
-            setCallback={setLast}
-            initialValue={last}
-            stateCallback={setEdit}
-          />
-        )}
-        <span onClick={() => setEdit(true)}>{last}</span>
-      </span>
-    </>
-  );
+  return <EditableField storageKey="last" initialValue="Dellbrügge" />;
 }
-
 
 function Title() {
-  const [edit, setEdit] = useState(false);
-  const [title, setTitle] = useLocalStorageState("title", "Medior Web Developer");
-
-  return (
-    <>
-      <span style={{ cursor: edit ? "text" : "pointer" }}>
-        {edit && (
-          <FlyingInput
-            setCallback={setTitle}
-            initialValue={title}
-            stateCallback={setEdit}
-          />
-        )}
-        <span onClick={() => setEdit(true)}>{title}</span>
-      </span>
-    </>
-  );
-
+  return <EditableField storageKey="title" initialValue="Medior Web Developer" />;
 }
-function Heading() {
 
+function Heading() {
   return (
     <section id="title">
       <h1 style={{ display: "flex", alignItems: "center" }}>
