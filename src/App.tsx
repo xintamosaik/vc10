@@ -49,7 +49,7 @@ function EditableText({
           autoFocus
         />
       )}
-      <span onClick={() => setEdit(true)}>{value}</span>
+      <span onClick={() => setEdit(true)}>{value || "<empty>"}</span>
     </span>
   );
 }
@@ -68,7 +68,7 @@ function Heading() {
   );
 }
 
-function ToggleUrlEdit({ key }: { key: string }) {
+function ToggleUrlEdit({ key, placeholderKey, placeholderUrl }: { key: string, placeholderKey: string; placeholderUrl: string }) {
   const [active, setActive] = useLocalStorageState(key + "-active", false);
   const handleCheckboxChange = () => {
     setActive((prev) => !prev);
@@ -97,7 +97,7 @@ function ToggleUrlEdit({ key }: { key: string }) {
         ></EditableText>
         <EditableText
           storageKey={key + "-url"}
-          initialValue="https://www.linkedin.com/in/ulfdellbruegge/"
+          initialValue={placeholderUrl}
         ></EditableText>
       </div>
     </div>
@@ -107,7 +107,10 @@ function ContactEdit() {
   return (
     <div>
       <h2>Contact</h2>
-      <ToggleUrlEdit key="linkedin" />
+      <ToggleUrlEdit key="linkedin" placeholderKey="linkedin" placeholderUrl="https://www.linkedin.com/in/yourname/" />
+      <ToggleUrlEdit key="email" placeholderKey="email" placeholderUrl="mailto:yourmail@yourprovider.com" />
+      <ToggleUrlEdit key="github" placeholderKey="github" placeholderUrl="https://github.com/yourusername" />
+  
     </div>
   );
 }
