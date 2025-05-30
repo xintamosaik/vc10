@@ -133,7 +133,10 @@ function Contact() {
         </a>
       </span>
       <span className="dash"></span>
-      <span>Düsseldorf, Germany</span>
+      <EditableText
+        storageKey="location"
+        initialValue="Osnabrück, Niedersachsen, Germany"
+      ></EditableText>
     </section>
   );
 }
