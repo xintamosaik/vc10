@@ -8,8 +8,6 @@ import Skills from "./components/Skills";
 import Educations from "./components/Educations";
 import { Contact, ContactEdit } from "./components/Contact";
 
-
-
 function App() {
   return (
     <main>

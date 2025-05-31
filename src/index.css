@@ -18,6 +18,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -51,6 +52,7 @@ button {
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -59,10 +61,10 @@ button:focus-visible {
 
 input[type="text"].fly {
   position: fixed;
-  
+
   left: 0;
   width: 100%;
-  
+
 }
 
 @media (prefers-color-scheme: light) {
@@ -70,9 +72,11 @@ input[type="text"].fly {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
